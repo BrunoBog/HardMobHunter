@@ -3,3 +3,4 @@ beautifulsoup4==4.6.0
 win10toast
 bs4
 time
+pyrebase
