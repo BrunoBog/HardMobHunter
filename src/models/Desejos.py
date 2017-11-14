@@ -8,7 +8,9 @@ class Pedidos(object):
         self.desejos = desejos
 
     def json(self):
-        pedido = {'nome': self.nome, 'email': self.email, 'desejos': self.desejos.pedidos}
+        pedido = {
+                'nome': self.nome, 'email': self.email, 'desejos': self.desejos.pedidos
+        }
         return pedido
 
 

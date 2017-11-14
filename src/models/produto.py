@@ -11,10 +11,10 @@ class Produto(object):
 
     def json(self):
         return {
-            "id": self._id,
-            "nome": self.nome,
-             "preco": self.preco,
-            "link": self.link
+         "id": self._id,
+         "nome": self.nome,
+         "preco": self.preco,
+         "link": self.link
         }
 
     # "preco": self.preco.replace(",","."),
