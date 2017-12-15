@@ -20,6 +20,7 @@ class Desejos(object):
         if pedido is not None:
             self.pedidos.append(pedido)
 
-    def adicionar_item(self, item):
-        self.pedidos.append(item)
+    def adicionar_item(self, item=None):
+        if item is not None:
+            self.pedidos.append(item)
 

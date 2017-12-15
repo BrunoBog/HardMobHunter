@@ -20,9 +20,12 @@ class Pessoa(object):
 
     # Chama o webservice que envia o email
     def send_hunt_mail(self):
-        url = 'http://localhost:8080/mail'
-        r = requests.post(url, data=json.dumps(self.json()))
-        print("Resposta do servidor: " + str(r.status_code) )
+        try:
+            url = 'http://localhost:8080/mail'
+            r = requests.post(url, data=json.dumps(self.json()))
+            print("Resposta do servidor: " + str(r.status_code) )
+        except:
+            print("não foi possível encontrar o webservice que envia email")
 
         # teste
         # r = requests.post('https://requestb.in/yz8zj5yz', data=json.dumps(self.json()))
