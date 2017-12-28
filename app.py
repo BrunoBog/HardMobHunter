@@ -7,19 +7,28 @@ from src.database.firebase import DbFirebase
 from src.models import Desejos
 
 
-db = DbFirebase()
-
+tempo_refresh = datetime.datetime.now()
 
 def buscar_desejos():
 
+    if int(tempo_refresh.hour - datetime.datetime.now().hour) > 0:
+        DbFirebase.refresh_token()
+
+    pedido = DbFirebase.buscar_todos("hardHunter")
+    return pedido
+
+
+def procurar_desejos():
+
     hardmob = HardMob()
     promobit = Promobit()
+
     while True:
-        db.refresh_token()
-        pedido = db.buscar_todos("hardHunter")
+        pedido = buscar_desejos()
+
         print("\nIniciando em:" + str(datetime.datetime.now()))
         for p in pedido.each():  # qui tenho cada pessoa
-            for desejo in dict(p.val()['desejos']).values():  # aqui cada item a procurar
+            for desejo in (p.val()['desejos']):  # aqui cada item a procurar
                 if desejo is not None:
                     print("procurando " + desejo + " para o " + p.val()['nome'] )  # + " Em: " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
                     promobit.busca(procura=desejo, nome=p.val()['nome'], email=p.val()['email'])
@@ -27,8 +36,7 @@ def buscar_desejos():
 
         print("\nExecutado em:" + str(datetime.datetime.now()))
         print("proxima exec em 5 minutos")
-        time.sleep(60 * 5)
-
+        # time.sleep(60 * 5)
 
 def adicionar_desejos(collection):
     desejos = Desejos.Desejos()
@@ -38,5 +46,5 @@ def adicionar_desejos(collection):
 
 
 if __name__ == '__main__':
-    buscar_desejos()
+    procurar_desejos()
     # adicionar_desejos("hardHunter")

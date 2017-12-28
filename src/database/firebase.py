@@ -1,36 +1,41 @@
 import pyrebase
 
 from src.models import Pessoa, Desejos
-
-
 class DbFirebase(object):
-    def __init__(self):
-        self.config = {
-                "apiKey": "AIzaSyBZIuABAkRcq2dnRbRL39WPmUG45rT5Hvs",
-                "authDomain": "hunterpromo-26348.firebaseapp.com",
-                "databaseURL": "https://hunterpromo-26348.firebaseio.com",
-                "projectId": "hunterpromo-26348",
-                "storageBucket": "hunterpromo-26348.appspot.com",
-                "messagingSenderId": "30161898656"
-            }
-                # "serviceAccount": "C:\\Users\\BOG\\OneDrive\\Documentos\\autoh\\Hunter.json"
-        self.firebase = pyrebase.initialize_app(self.config)
-        self.auth = self.firebase.auth()
-        self.user = self.auth.sign_in_with_email_and_password('teste@testadormaster.com', 'RootsBloodRoots')
-        self.db = self.firebase.database()
+    config = {
+        "apiKey": "AIzaSyBZIuABAkRcq2dnRbRL39WPmUG45rT5Hvs",
+        "authDomain": "hunterpromo-26348.firebaseapp.com",
+        "databaseURL": "https://hunterpromo-26348.firebaseio.com",
+        "projectId": "hunterpromo-26348",
+        "storageBucket": "hunterpromo-26348.appspot.com",
+        "messagingSenderId": "30161898656"
+    }
+    # "serviceAccount": "C:\\Users\\BOG\\OneDrive\\Documentos\\autoh\\Hunter.json"
 
-    def incluir(self, collection, item):
-        self.db.child(collection).push(item,  self.user['idToken'])
+    firebase = pyrebase.initialize_app(config)
+    auth = firebase.auth()
+    user = auth.sign_in_with_email_and_password('teste@testadormaster.com', 'RootsBloodRoots')
+    db = firebase.database()
 
-    def buscar_todos(self, collection=None):
-        if collection:
-            data = self.db.child(collection).get(self.user['idToken'])
+    @staticmethod
+    def incluir(collection, item, child=None):
+        if child:
+            DbFirebase.db.child(collection).child(child).push(item, DbFirebase.user['idToken'])
         else:
-            data = self.db.child().child().get(self.user['idToken'])
-        return data
+            DbFirebase.db.child(collection).push(item,  DbFirebase.user['idToken'])
 
-    def refresh_token(self):
-        self.user = self.auth.refresh(self.user['refreshToken'])
+    @staticmethod
+    def buscar_todos( collection=None):
+        if collection:
+            return DbFirebase.db.child(collection).get(DbFirebase.user['idToken'])
+        else:
+            return DbFirebase.db.child().child().get(DbFirebase.user['idToken'])
 
-    def incluir2(self, collection, item):
-        self.db.child(collection).chield('pessoas').push(item,  self.user['idToken'])
+    @staticmethod
+    def refresh_token():
+        DbFirebase.user = DbFirebase.auth.refresh(DbFirebase.user['refreshToken'])
+
+    @staticmethod
+    def incluir2( collection, item):
+        DbFirebase.db.child(collection).chield('pessoas').push(item,  DbFirebase.user['idToken'])
+

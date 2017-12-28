@@ -17,10 +17,12 @@ class Promobit(object):
         for x in promocao:
             i = x.find("a", {"class":"access_url", "itemprop": "name", })
             promo = x.find("span", {"itemprop": "lowPrice"})
-            link = "https://www.promobit.com.br/" + i.attrs['href']
-            prod = Produto(nome=i.text, preco=promo.text, link=link)
-            self.verifica_produto(produto=prod, procura=procura, nome=nome, email=email)
-        return self.lista
+            if promo:
+                link = "https://www.promobit.com.br/" + i.attrs['href']
+                prod = Produto(nome=i.text, preco=promo.text, link=link)
+                self.verifica_produto(produto=prod, procura=procura, nome=nome, email=email)
+
+
 
     def verifica_produto(self, produto, procura, nome, email):
         if not any(x.nome == produto.nome for x in self.lista):
