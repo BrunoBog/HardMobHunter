@@ -1,6 +1,8 @@
 import json
+import platform
 import uuid
 import requests
+from win10toast import ToastNotifier
 
 
 class Pessoa(object):
@@ -20,6 +22,10 @@ class Pessoa(object):
 
     # Chama o webservice que envia o email
     def send_hunt_mail(self):
+
+        if platform.system() == 'windows':
+            self.show_notification()
+
         try:
             url = 'http://localhost:8080/mail'
             r = requests.post(url, data=json.dumps(self.json()))
@@ -31,3 +37,10 @@ class Pessoa(object):
         # r = requests.post('https://requestb.in/yz8zj5yz', data=json.dumps(self.json()))
         # print (r.status_code)
         # print (r.content)
+
+    def show_notification(self):
+        toaster = ToastNotifier()
+        toaster.show_toast("Encontrei !!!",
+                           self.produto.nome + " por " + self.produto.preco,
+                           icon_path="custom.ico",
+                           duration=10)

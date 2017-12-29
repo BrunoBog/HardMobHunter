@@ -22,9 +22,9 @@ def procurar_desejos():
 
     hardmob = HardMob()
     promobit = Promobit()
-
+    pedido = buscar_desejos()
     while True:
-        pedido = buscar_desejos()
+
 
         print("\nIniciando em:" + str(datetime.datetime.now()))
         for p in pedido.each():  # qui tenho cada pessoa
@@ -36,13 +36,13 @@ def procurar_desejos():
 
         print("\nExecutado em:" + str(datetime.datetime.now()))
         print("proxima exec em 5 minutos")
-        # time.sleep(60 * 5)
+        time.sleep(60 * 5)
 
 def adicionar_desejos(collection):
     desejos = Desejos.Desejos()
     desejos.adicionar_item("item")
     pedido = Desejos.Pedidos(nome="Nome", email="name@gmail.com", desejos=desejos)
-    db.incluir(collection, pedido.json())
+    DbFirebase.incluir(collection, pedido.json())
 
 
 if __name__ == '__main__':
