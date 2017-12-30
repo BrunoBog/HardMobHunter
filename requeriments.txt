@@ -1,5 +1,7 @@
-requests==2.7.0
-beautifulsoup4==4.6.0
-win10toast
+requests
+beautifulsoup4
 bs4
-time
+pyrebase
+pypiwin32
+setuptools
+win10toast
