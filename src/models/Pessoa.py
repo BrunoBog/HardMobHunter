@@ -23,7 +23,7 @@ class Pessoa(object):
     # Chama o webservice que envia o email
     def send_hunt_mail(self):
 
-        if platform.system() == 'windows':
+        if platform.system() == 'Windows':
             self.show_notification()
 
         try:
@@ -42,5 +42,5 @@ class Pessoa(object):
         toaster = ToastNotifier()
         toaster.show_toast("Encontrei !!!",
                            self.produto.nome + " por " + self.produto.preco,
-                           icon_path="custom.ico",
+                           # icon_path="C:\\Users\\bruno.alves\\OneDrive\\Workspace\\Phyton\\HardMobHunter\src\ico\\buy.png",
                            duration=10)

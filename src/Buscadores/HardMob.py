@@ -21,7 +21,7 @@ class HardMob(object):
             self.verifica_produto(produto=prod, procura=procura, nome=nome, email=email)
 
     def verifica_produto(self, produto, procura, nome, email):
-        if not any(x.nome == produto.nome for x in self.lista):
+        if not any(x.link == produto.link for x in self.lista):
             if produto.is_procurado(procura):
                 pessoa = Pessoa(nome=nome, email=email, produto=produto)
                 pessoa.send_hunt_mail()
