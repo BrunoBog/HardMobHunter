@@ -14,7 +14,7 @@ class DbFirebase(object):
 
     firebase = pyrebase.initialize_app(config)
     auth = firebase.auth()
-    user = auth.sign_in_with_email_and_password('teste@testadormaster.com', 'RootsBloodRoots')
+    user = auth.sign_in_with_email_and_password('teste@testando.com', 'RootsBloodRoots')
     db = firebase.database()
 
     @staticmethod
